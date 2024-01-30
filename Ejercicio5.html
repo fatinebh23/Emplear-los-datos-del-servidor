@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+/* 5.Modifica el código anterior para que sólo te muestre las filas cuyo Artist empiece por 'S' */
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+}
+th,td {
+  padding: 5px;
+}
+th:nth-child(1), td:nth-child(1) {
+    color: red;
+    background-color: black;
+  }
+
+  th:nth-child(2), td:nth-child(2) {
+    color: black;
+    background-color: red;
+  }
+</style>
+<body>
+
+<h2>The XMLHttpRequest Object</h2>
+
+<button type="button" onclick="loadDoc()">Get my CD collection</button>
+<br><br>
+<table id="demo"></table>
+
+<script>
+function loadDoc() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    myFunction(this);
+  }
+  xhttp.open("GET", "cd_catalog.xml");
+  xhttp.send();
+}
+function myFunction(xml) {
+    const xmlDoc = xml.responseXML;
+    const x = xmlDoc.getElementsByTagName("CD");
+    let table = "<tr><th>Artist</th><th>Title</th></tr>";
+
+    for (let i = 0; i < x.length; i++) {
+      const artist = x[i].getElementsByTagName("ARTIST")[0].childNodes[0].nodeValue;
+
+      // Solo agregar la fila si el artista comienza con 'S'
+      if (artist.charAt(0).toUpperCase() === 'S') {
+        table += "<tr><td>" +
+          artist +
+          "</td><td>" +
+          x[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue +
+          "</td></tr>";
+      }
+    }
+  document.getElementById("demo").innerHTML = table;
+}
+</script>
+
+</body>
+</html>
+
+</html>

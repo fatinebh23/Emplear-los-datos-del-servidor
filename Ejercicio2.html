@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="demo">
+    <!-- 2.- No elimines el botón. Haz que cada línea del fichero aparezca como varios heading de varios colores. -->
+<h2>The XMLHttpRequest Object</h2>
+
+<button type="button" onclick="loadDoc('ajax_info.txt', myFunction)">Change Content
+</button>
+</div>
+
+<script>
+function loadDoc(url, xFunction) {
+  const xhttp=new XMLHttpRequest();
+  xhttp.onload = function() {xFunction(this);}
+  xhttp.open("GET", url);
+  xhttp.send();
+}
+
+function myFunction(xhttp) {
+  const lines = xhttp.responseText.split('\n');
+  let coloredContent = '';
+
+  lines.forEach((line, index) => {
+    const color = getRandomColor(); // Obtener un color aleatorio
+    coloredContent += `<h3 style="color: ${color}">${line}</h3>`;
+  });
+
+  document.getElementById("demo").innerHTML = coloredContent;
+}
+
+function getRandomColor() {
+  // Generar un color hexadecimal aleatorio
+  return '#' + Math.floor(Math.random()*16777215).toString(16);
+}
+</script>
+</body>
+</html>

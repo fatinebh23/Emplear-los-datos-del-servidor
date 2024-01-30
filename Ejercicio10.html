@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<style>
+  table {
+    border-collapse: collapse;
+    width: 50%;
+  }
+
+  th, td {
+    border: 1px solid blue;
+    padding: 8px;
+    text-align: left;
+    color: red;
+  }
+</style>
+<body>
+    <!-- 10.- Con los datos proporcionados por el servidor, crea una tabla de dos columnas con letra de color rojo y bordes azules. -->
+
+
+<h2>Use HTTP POST to Get JSON Data from a PHP Server</h2>
+
+<table id="demoTable"></table>
+
+<script>
+const dbParam = JSON.stringify({ "limit": 10 });
+const xmlhttp = new XMLHttpRequest();
+
+xmlhttp.onload = function() {
+  myObj = JSON.parse(this.responseText);
+  let table = "<tr><th>Nombre</th><th>Apellidos</th></tr>";
+
+  for (let x in myObj) {
+    
+    const nombrecompleto = myObj[x].name.split(" ");
+    const nombre = nombrecompleto[0] || "";
+    const apellidos = nombrecompleto.slice(1).join(" ") || "";
+
+    table += "<tr><td>" + nombre + "</td><td>" + apellidos + "</td></tr>";
+  }
+
+  document.getElementById("demoTable").innerHTML = table;
+};
+
+xmlhttp.open("POST", "json_demo_db_post.php");
+xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xmlhttp.send("x=" + dbParam);
+
+</script>
+
+<p>Try changing the "limit" property from 10 to 5.</p>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <!-- 9.- Crea un carrusel de nombres de coches con dos flechitas para ir adelante y atrás y recorrer el array (es muy parecido a un ejercicio anterior). -->
+<h2>Car Carousel</h2>
+<div>
+  <button onclick="prevCar()">❮ Prev</button>
+  <span id="carName"></span>
+  <button onclick="nextCar()">Next ❯</button>
+</div>
+
+<script>
+const xmlhttp = new XMLHttpRequest();
+let carIndex = 0;
+let carArr;
+
+xmlhttp.onload = function() {
+  carArr = JSON.parse(this.responseText);
+  showCurrentCar();
+}
+
+xmlhttp.open("GET", "json_demo_array.txt", true);
+xmlhttp.send();
+
+function showCurrentCar() {
+  const carNameElement = document.getElementById("carName");
+  if (carArr && carArr.length > 0) {
+    carNameElement.textContent = carArr[carIndex];
+  } else {
+    carNameElement.textContent = "No cars available";
+  }
+}
+
+function nextCar() {
+  if (carArr && carIndex < carArr.length - 1) {
+    carIndex++;
+  } else if (carArr) {
+    carIndex = 0;
+  }
+  showCurrentCar();
+}
+
+function prevCar() {
+  if (carArr && carIndex > 0) {
+    carIndex--;
+  } else if (carArr) {
+    carIndex = carArr.length - 1;
+  }
+  showCurrentCar();
+}
+</script>
+
+</body>
+</html>

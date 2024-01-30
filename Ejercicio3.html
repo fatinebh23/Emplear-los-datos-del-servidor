@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <!-- 3.- Debe decirnos "Correcto" si en la transmisión del fichero el max-age es menor que 10000 e "Incorrecto" si es mayor o igual que 10000. -->
+<h2>The XMLHttpRequest Object</h2>
+<p>The getAllResponseHeaders() function returns all the header information of a resource, like length, server-type, content-type, last-modified, etc:</p>
+
+<p id="demo"></p>
+
+<script>
+const xhttp = new XMLHttpRequest();
+xhttp.onload = function() {
+  const headers = this.getAllResponseHeaders();
+  const maxAgeValue = getMaxAgeValue(headers);
+
+  if (maxAgeValue < 10000) {
+    document.getElementById("demo").innerHTML = "Correcto";
+  } else {
+    document.getElementById("demo").innerHTML = "Incorrecto";
+  }
+}
+
+function getMaxAgeValue(headers) {
+  
+  const maxAgeHeader = headers.match(/max-age=(\d+)/i);
+  return maxAgeHeader ? parseInt(maxAgeHeader[1]) : 0;
+}
+
+xhttp.open("GET", "ajax_info.txt");
+xhttp.send();
+</script>
+
+</body>
+</html>

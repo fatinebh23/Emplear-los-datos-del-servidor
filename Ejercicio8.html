@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Fetch a JSON file with XMLHttpRequest</h2>
+<div id="demo"></div>
+<!-- 8.Muestra todos los campos devueltos por el servidor mediante json. Dales algo de formato, por ejemplo negrita y color azul. Y que cuando se haga click sobre el nombre, se abra un alert con ese nombre -->
+<script>
+const xmlhttp = new XMLHttpRequest();
+xmlhttp.onload = function() {
+  const myObj = JSON.parse(this.responseText);
+  const demoElement = document.getElementById("demo");
+
+  
+  for (const key in myObj) {
+    if (myObj.hasOwnProperty(key)) {
+      const value = myObj[key];
+
+    
+      const formattedValue = `<strong style="color: blue;">${key}:</strong> ${value}<br>`;
+      
+   
+      demoElement.innerHTML += formattedValue;
+    }
+  }
+
+  
+  const nameElement = document.getElementById("name");
+  if (nameElement) {
+    nameElement.addEventListener("click", function() {
+      alert("Nombre: " + myObj.name);
+    });
+  }
+}
+
+xmlhttp.open("GET", "json_demo.txt");
+xmlhttp.send();
+</script>
+
+</body>
+</html>
